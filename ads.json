@@ -22,7 +22,7 @@
     "scrimColor": "#B3000000",
     "dismissOnOutsideTap": false,
     "gravity": "center",
-    "paddingDp": 16
+    "paddingDp": 24
   },
 
   "ads": [
@@ -32,9 +32,9 @@
       "elements": [
         {
           "type": "card",
-          "widthPercent": 92,
-          "maxWidthDp": 520,
-          "paddingDp": 16,
+          "widthPercent": 78,
+          "maxWidthDp": 460,
+          "paddingDp": 14,
           "backgroundColor": "#FF14151C",
           "cornerRadiusDp": 20,
 
@@ -43,7 +43,7 @@
               "type": "video",
               "src": "https://boktoss2345.github.io/Word-Search-Puzzle-Brain-Quest-Daily-Word-Finder-Game/assets/videos8584865d.mp4",
               "aspectRatio": "16:9",
-              "contentScale": "crop",
+              "contentScale": "fit",
               "cornerRadiusDp": 14,
               "autoplay": true,
               "loop": true,
