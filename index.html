@@ -1,81 +1,182 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#14213d" />
-  <meta name="description" content="Word Search Puzzle: Brain Quest is a colorful daily word finder and relaxing brain game." />
-  <title>Word Search Puzzle: Brain Quest | Daily Word Finder Brain Game</title>
-  <link rel="icon" href="assets/icon-114.png" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <main class="phone-shell" aria-label="Word Search Puzzle game">
-    <section class="app" id="app">
-      <header class="topbar">
-        <button class="icon-button" id="levelsButton" aria-label="Choose a puzzle level">☰</button>
-        <div class="brand"><span class="brand-mark">W</span><span>WORD SEARCH</span></div>
-        <button class="icon-button" id="soundButton" aria-label="Toggle sound">♬</button>
-      </header>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#6e3e94" />
+    <title>Avatar World</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --purple: #6e3e94;
+        --pink: #ec73b7;
+        --yellow: #ffe783;
+      }
 
-      <section class="hero" aria-label="Current puzzle details">
-        <div>
-          <p class="eyebrow" id="categoryLabel">OCEAN ESCAPE</p>
-          <h1 id="levelTitle">Blue Horizon</h1>
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 50% 15%, #bd7ac6 0, transparent 34rem),
+          linear-gradient(145deg, var(--purple), var(--pink));
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .game {
+        width: min(100vw, 1280px);
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        padding: clamp(12px, 3vw, 32px);
+      }
+
+      .screen {
+        position: relative;
+        width: min(100%, 1024px);
+        aspect-ratio: 1024 / 600;
+        overflow: hidden;
+        border: 4px solid rgba(255, 247, 193, .95);
+        border-radius: clamp(14px, 2.2vw, 28px);
+        box-shadow: 0 18px 45px rgba(35, 10, 55, .42);
+        background: #5e3678;
+      }
+
+      .welcome,
+      .story-image,
+      .click-zone {
+        position: absolute;
+        inset: 0;
+      }
+
+      .welcome {
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        text-align: center;
+        background:
+          radial-gradient(circle at 50% 37%, rgba(255, 229, 126, .5), transparent 18%),
+          linear-gradient(145deg, #4e276a, #c34a9d);
+        transition: opacity .35s ease, visibility .35s ease;
+      }
+
+      .welcome.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .welcome h1 {
+        margin: 0 0 14px;
+        color: #fff8ce;
+        font-size: clamp(2rem, 6vw, 4.75rem);
+        line-height: .95;
+        text-shadow: 0 4px 0 #6d3479, 0 7px 16px rgba(0, 0, 0, .3);
+      }
+
+      .welcome p {
+        margin: 0;
+        font-size: clamp(.9rem, 2vw, 1.25rem);
+      }
+
+      .story-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transform: scale(1.025);
+        transition: opacity .4s ease, transform .4s ease;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+
+      .story-image.visible {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .click-zone {
+        z-index: 2;
+        border: 0;
+        cursor: pointer;
+        background: transparent;
+      }
+
+      .click-zone:focus-visible {
+        outline: 5px solid var(--yellow);
+        outline-offset: -9px;
+      }
+
+      .hint {
+        position: absolute;
+        z-index: 3;
+        right: 18px;
+        bottom: 14px;
+        margin: 0;
+        padding: 8px 12px;
+        border-radius: 999px;
+        color: #402152;
+        background: rgba(255, 248, 205, .93);
+        font-weight: 700;
+        font-size: clamp(.72rem, 1.7vw, 1rem);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, .2);
+        pointer-events: none;
+        transition: opacity .2s ease;
+      }
+
+      .screen.finished .click-zone { cursor: default; }
+      .screen.finished .hint { opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <section class="screen" id="screen" aria-label="Avatar World story">
+        <div class="welcome" id="welcome">
+          <div>
+            <h1>Avatar World</h1>
+            <p>Click to start your adventure</p>
+          </div>
         </div>
-        <div class="streak"><span>🔥</span><b>7</b><small>DAY STREAK</small></div>
+
+        <img class="story-image" src="assets/image-1.jpg" alt="Avatar World map" />
+        <img class="story-image" src="assets/image-2.jpg" alt="Choose your character" />
+        <img class="story-image" src="assets/image-3.jpg" alt="Avatar World start screen" />
+
+        <button class="click-zone" id="next" type="button" aria-label="Start the story"></button>
+        <p class="hint" id="hint">Click to start</p>
       </section>
+    </main>
 
-      <section class="status-card" aria-label="Game status">
-        <div><span class="status-label">WORDS</span><strong id="progressText">0 / 6</strong></div>
-        <div class="status-divider"></div>
-        <div><span class="status-label">TIME</span><strong id="timerText">01:24</strong></div>
-        <button class="hint-button" id="hintButton" aria-label="Use a hint"><span>☀</span><b id="hintCount">3</b></button>
-      </section>
+    <script>
+      const screen = document.getElementById('screen');
+      const welcome = document.getElementById('welcome');
+      const nextButton = document.getElementById('next');
+      const hint = document.getElementById('hint');
+      const images = [...document.querySelectorAll('.story-image')];
+      let step = -1;
 
-      <div class="prompt-row"><span>FIND THE HIDDEN WORDS</span><button id="newGameButton">NEW</button></div>
+      function advanceStory() {
+        // After the third picture, the game remains on the final screen.
+        if (step >= images.length - 1) return;
 
-      <section class="board-wrap" id="boardWrap" aria-label="Letter grid. Drag across letters to select a word.">
-        <div class="selection-line" id="selectionLine" aria-hidden="true"></div>
-        <div class="letter-board" id="letterBoard" role="grid" aria-label="Word search letter board"></div>
-      </section>
+        step += 1;
+        welcome.classList.add('hidden');
+        images.forEach((image, index) => image.classList.toggle('visible', index === step));
 
-      <section class="word-bank" aria-label="Words to find">
-        <div class="word-bank-title"><span>YOUR WORDS</span><span id="foundCount">0 FOUND</span></div>
-        <div class="word-list" id="wordList"></div>
-      </section>
+        if (step === images.length - 1) {
+          screen.classList.add('finished');
+          nextButton.setAttribute('aria-label', 'Story finished');
+          hint.textContent = 'Enjoy your world!';
+        } else {
+          hint.textContent = 'Click for the next screen';
+          nextButton.setAttribute('aria-label', 'Show next screen');
+        }
+      }
 
-      <footer class="bottom-bar">
-        <button class="nav-item active" id="playButton"><span>⌕</span><small>PLAY</small></button>
-        <button class="nav-item" id="dailyButton"><span>◈</span><small>DAILY</small></button>
-        <button class="nav-item" id="statsButton"><span>♜</span><small>STATS</small></button>
-      </footer>
-    </section>
-
-    <section class="levels-panel" id="levelsPanel" aria-label="Choose a word search">
-      <div class="panel-handle"></div>
-      <div class="panel-head"><div><p class="eyebrow">PUZZLE MAP</p><h2>Pick your mood</h2></div><button id="closeLevels" class="close-button" aria-label="Close level picker">×</button></div>
-      <div class="level-cards" id="levelCards"></div>
-    </section>
-
-    <section class="welcome-overlay" id="welcomeOverlay" aria-label="Welcome screen">
-      <div class="welcome-glow glow-one"></div><div class="welcome-glow glow-two"></div>
-      <div class="welcome-copy"><div class="big-brand-mark">W</div><p class="eyebrow">A CALM DAILY BRAIN GAME</p><h2>Word Search<br><em>Brain Quest</em></h2><p>Find words, clear your mind, and keep your streak glowing.</p></div>
-      <div class="welcome-card"><span>TODAY'S QUEST</span><b>Ocean Escape</b><small>6 words · 3 hints · relaxing</small></div>
-      <button class="start-button" id="startButton">START PLAYING <span>→</span></button>
-      <p class="welcome-foot">A new relaxing puzzle, every day</p>
-    </section>
-
-    <section class="win-overlay" id="winOverlay" aria-label="Puzzle complete" aria-hidden="true">
-      <div class="confetti c1">✦</div><div class="confetti c2">●</div><div class="confetti c3">✦</div><div class="confetti c4">●</div>
-      <div class="win-medal">★</div>
-      <p class="eyebrow">PUZZLE COMPLETE</p><h2>Brilliant<br><em>word finder!</em></h2>
-      <p id="winMessage">You found every hidden word.</p>
-      <div class="win-stats"><div><b id="winTime">01:24</b><span>TIME</span></div><div><b>+120</b><span>POINTS</span></div><div><b>7</b><span>STREAK</span></div></div>
-      <button class="start-button" id="nextButton">NEXT PUZZLE <span>→</span></button>
-      <button class="text-button" id="replayButton">PLAY AGAIN</button>
-    </section>
-  </main>
-  <script src="game.js"></script>
-</body>
+      nextButton.addEventListener('click', advanceStory);
+    </script>
+  </body>
 </html>
